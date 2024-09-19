@@ -6,6 +6,11 @@
 This document provides a high-level view of the changes introduced in DocTest by release.
 For a detailed view of what has changed, refer to the {repo-uri}/commits/master[commit history] on GitHub.
 
+== Master (fork)
+
+* Update dependencies
+* Introduce Rubocop and Dependabot
+* Fix incompatabilities with older versions
 
 == 1.5.2.0 (2015-04-04)
 
