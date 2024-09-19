@@ -25,23 +25,23 @@ A tool for end-to-end testing of Asciidoctor backends based on comparing of text
   s.add_runtime_dependency 'diffy', '~> 3.0'
   s.add_runtime_dependency 'htmlbeautifier', '~> 1.0'
   s.add_runtime_dependency 'minitest', '~> 5.25'
-  s.add_runtime_dependency 'nokogiri', '~> 1.16'
+  s.add_runtime_dependency 'nokogiri', '~> 1.13'
 
   # development
   s.add_development_dependency 'bundler', '>= 1.6'
-  s.add_development_dependency 'rake', '~> 12.0'
+  s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'thread_safe', '~> 0.3'
   s.add_development_dependency 'yard', '~> 0.9'
 
   # unit tests
   s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0'
-  s.add_development_dependency 'fakefs', '~> 1.2'
-  s.add_development_dependency 'simplecov', '~> 0.17.1'
+  s.add_development_dependency 'fakefs', '~> 2.5'
+  s.add_development_dependency 'simplecov', '~> 0.22.0'
   s.add_development_dependency 'rspec', '~> 3.1'
   s.add_development_dependency 'rspec-collection_matchers', '~> 1.1'
 
   # integration tests
-  s.add_development_dependency 'aruba', '~> 1.0'
-  s.add_development_dependency 'cucumber', '~> 3.0'
-  s.add_development_dependency 'slim', '~> 4.0'
+  s.add_development_dependency 'aruba', '~> 2.0'
+  s.add_development_dependency 'cucumber', '~> 9.0'
+  s.add_development_dependency 'slim', '~> 5.0'
 end
