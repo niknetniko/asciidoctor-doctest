@@ -1,22 +1,40 @@
 require:
-  - rubocop-minitest
-  - rubocop-rake
-  - rubocop-rspec
+- rubocop-minitest
+- rubocop-rake
+- rubocop-rspec
 
-RSpec/ContextWording:
-   AllowedPatterns:
-     - ^and
-
-RSpec/NestedGroups:
+Lint/DuplicateMethods:
   Enabled: false
 
-RSpec/MultipleMemoizedHelpers:
+Metrics/AbcSize:
   Enabled: false
 
-RSpec/NamedSubject:
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/ModuleLength:
+  Max: 300
+
+Metrics/PerceivedComplexity:
   Enabled: false
 
 Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+RSpec/ContextWording:
+  AllowedPatterns:
+  - "^and"
+
+RSpec/ExampleLength:
   Enabled: false
 
 RSpec/MessageSpies:
@@ -25,117 +43,36 @@ RSpec/MessageSpies:
 RSpec/MultipleExpectations:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/NoExpectationExample:
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
 RSpec/SubjectStub:
   Enabled: false
 
 RSpec/VerifiedDoubleReference:
   Enabled: false
 
-RSpec/SpecFilePathFormat:
-  Enabled: false
-
-RSpec/ExampleLength:
-  Enabled: false
-
-Metrics/ModuleLength:
-  Max: 300
-
-Metrics/LineLength:
-  Max: 120
-
-Metrics/MethodLength:
-  Max: 25
-
-Metrics/ClassLength:
-  Max: 200
-
-Metrics/AbcSize:
-  Enabled: false
-
-Metrics/CyclomaticComplexity:
-  Enabled: false
-
-Metrics/PerceivedComplexity:
+Rake/Desc:
   Enabled: false
 
 Style/Documentation:
   Enabled: false
 
+Style/FileName:
+  Exclude:
+  - lib/asciidoctor-doctest.rb
+
 Style/StringConcatenation:
   Enabled: false
-
-RSpec/NoExpectationExample:
-  Enabled: false
-
-#Lint/UnusedMethodArgument:
-#  Enabled: false
-#
-#Metrics/LineLength:
-#  Max: 100
-#
-#Metrics/MethodLength:
-#  Max: 15
-#
-#Metrics/ParameterLists:
-#  CountKeywordArgs: false
-#
-#Style/AlignHash:
-#  EnforcedLastArgumentHashStyle: always_ignore
-#
-#Style/Blocks:
-#  Enabled: false
-#
-#Style/ClassAndModuleChildren:
-#  Enabled: false
-#
-#Style/Documentation:
-#  Enabled: false
-#
-#Style/DoubleNegation:
-#  Enabled: false
-#
-#Style/EmptyLines:
-#  Enabled: false
-#
-#Style/EmptyLinesAroundBlockBody:
-#  Exclude: [ 'spec/**/*.rb' ]
-#
-#Style/EmptyLinesAroundClassBody:
-#  Enabled: false
-#
-#Style/EmptyLinesAroundModuleBody:
-#  Enabled: false
-#
-Style/FileName:
-  Exclude: [ 'lib/asciidoctor-doctest.rb' ]
-
-Lint/DuplicateMethods:
-  Enabled: false
-
-Rake/Desc:
-  Enabled: false
-
-#Style/HashSyntax:
-#  Exclude: [ '**/Rakefile' ]
-#
-#Style/Lambda:
-#  Enabled: false
-#
-#Style/MultilineOperationIndentation:
-#  EnforcedStyle: indented
-#
-#Style/PercentLiteralDelimiters:
-#  PreferredDelimiters:
-#    '%w': '[]'
-#
-#Style/PerlBackrefs:
-#  Enabled: false
-#
-#Style/SpaceInsideBrackets:
-#  Enabled: false
-#
-#Style/SpaceInsideHashLiteralBraces:
-#  Enabled: false
-#
-#Style/WordArray:
-#  MinSize: 2
