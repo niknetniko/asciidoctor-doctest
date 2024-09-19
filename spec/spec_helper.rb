@@ -1,6 +1,5 @@
 require 'corefines'
 require 'rspec/collection_matchers'
-require 'simplecov'
 require 'asciidoctor/doctest'
 require 'fakefs/spec_helpers'
 
