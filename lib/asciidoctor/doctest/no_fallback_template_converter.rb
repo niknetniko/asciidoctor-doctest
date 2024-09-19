@@ -19,7 +19,7 @@ module Asciidoctor
       NOT_FOUND_MARKER = '--TEMPLATE NOT FOUND--'
 
       def initialize(backend, opts = {})
-        super Asciidoctor::Converter::TemplateConverter.new(backend, opts[:template_dirs], opts)
+        super(Asciidoctor::Converter::TemplateConverter.new(backend, opts[:template_dirs], opts))
       end
 
       ##

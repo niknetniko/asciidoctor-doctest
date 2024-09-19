@@ -63,12 +63,12 @@ module Asciidoctor
       # @private
       def summary
         str = String.new("#{count} examples (")
-        str << [
+        str << ([
           ("#{passes} passed".color(:green) if passes > 0),
           ("#{failures} failed".color(:red) if failures > 0),
           ("#{errors} errored".color(:yellow) if errors > 0),
           ("#{skips} skipped".color(:cyan) if skips > 0)
-        ].compact.join(', ') + ")\n\n"
+        ].compact.join(', ') + ")\n\n")
 
         str << "Finished in %.3f s.\n".format(total_time)
 

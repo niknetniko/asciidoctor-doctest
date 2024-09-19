@@ -20,5 +20,5 @@ Before do
 end
 
 After do
-  FileUtils.rm_rf(TEMP_DIR) if Dir.exist? TEMP_DIR
+  FileUtils.rm_rf(TEMP_DIR)
 end

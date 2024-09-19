@@ -8,6 +8,12 @@ require:
 AllCops:
   NewCops: enable
 
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
+
+Layout/LineLength:
+  Max: 120
+
 Lint/DuplicateMethods:
   Enabled: false
 
@@ -20,9 +26,6 @@ Metrics/ClassLength:
 Metrics/CyclomaticComplexity:
   Enabled: false
 
-Metrics/LineLength:
-  Max: 120
-
 Metrics/MethodLength:
   Max: 25
 
@@ -31,6 +34,10 @@ Metrics/ModuleLength:
 
 Metrics/PerceivedComplexity:
   Enabled: false
+
+Naming/FileName:
+  Exclude:
+  - lib/asciidoctor-doctest.rb
 
 Naming/HeredocDelimiterNaming:
   Enabled: false
@@ -74,10 +81,6 @@ Rake/Desc:
 
 Style/Documentation:
   Enabled: false
-
-Style/FileName:
-  Exclude:
-  - lib/asciidoctor-doctest.rb
 
 Style/StringConcatenation:
   Enabled: false

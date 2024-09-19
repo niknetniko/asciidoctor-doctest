@@ -134,6 +134,6 @@ describe DocTest::Tester do
     data = data.map do |name, tuple|
       [name, tuple.map { |opts| DocTest::Example.new(name, **opts) }]
     end
-    Hash[data]
+    data.to_h
   end
 end

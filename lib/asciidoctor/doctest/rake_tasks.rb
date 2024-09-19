@@ -195,7 +195,7 @@ module Asciidoctor
       #        given object responds to +#call+, then it's invoked with +self+
       #        as a parameter. The result is expected to be a +String+.
       def desc(desc)
-        super desc.respond_to?(:call) ? desc.call(self) : desc.to_s
+        super(desc.respond_to?(:call) ? desc.call(self) : desc.to_s)
       end
 
       private

@@ -104,7 +104,7 @@ module Asciidoctor
         private
 
         def initialize(reporter, name, location, callable)
-          super name
+          super(name)
           @reporter = reporter
           @location = location
           @callable = callable

@@ -19,12 +19,12 @@ A tool for end-to-end testing of Asciidoctor backends based on comparing of text
   s.required_ruby_version = '>= 2.0'
 
   # runtime
-  s.add_runtime_dependency 'asciidoctor', '>= 1.5.0', '< 3.0'
-  s.add_runtime_dependency 'corefines', '~> 1.2'
-  s.add_runtime_dependency 'diffy', '~> 3.0'
-  s.add_runtime_dependency 'htmlbeautifier', '~> 1.0'
-  s.add_runtime_dependency 'minitest', '~> 5.25'
-  s.add_runtime_dependency 'nokogiri', '~> 1.13'
+  s.add_dependency 'asciidoctor', '>= 1.5.0', '< 3.0'
+  s.add_dependency 'corefines', '~> 1.2'
+  s.add_dependency 'diffy', '~> 3.0'
+  s.add_dependency 'htmlbeautifier', '~> 1.0'
+  s.add_dependency 'minitest', '~> 5.25'
+  s.add_dependency 'nokogiri', '~> 1.13'
 
   # development
   s.add_development_dependency 'bundler', '>= 1.6'
@@ -47,4 +47,5 @@ A tool for end-to-end testing of Asciidoctor backends based on comparing of text
   s.add_development_dependency 'aruba', '~> 2.0'
   s.add_development_dependency 'cucumber', '~> 9.0'
   s.add_development_dependency 'slim', '~> 5.0'
+  s.metadata['rubygems_mfa_required'] = 'true'
 end

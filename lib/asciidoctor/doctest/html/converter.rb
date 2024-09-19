@@ -13,7 +13,7 @@ module Asciidoctor
       class Converter < AsciidocConverter
         def initialize(paragraph_xpath: './p/node()', **opts)
           @paragraph_xpath = paragraph_xpath
-          super opts
+          super(opts)
         end
 
         def convert_examples(input_exmpl, output_exmpl)

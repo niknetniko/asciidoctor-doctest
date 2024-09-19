@@ -6,26 +6,26 @@ describe DocTest::Factory do
   let(:default_opts) { {} }
 
   before do
-    factory.register(:foo, OpenStruct, default_opts)
+    factory.register(:foo, Hash, default_opts)
     factory.register(:bar, String, 'illegal')
     factory.register(:baz, Integer)
   end
 
   describe '.create' do
     it 'returns instance of registered class' do
-      expect(factory.create(:foo)).to eq OpenStruct.new
+      expect(factory.create(:foo)).to eq({})
     end
 
     context 'with opts' do
       it 'initializes class with opts' do
-        expect(factory.create(:foo, a: 42)).to eq OpenStruct.new(a: 42)
+        expect(factory.create(:foo, a: 42)).to eq Hash.new(a: 42)
       end
 
       context 'when class with default_opts' do
         let(:default_opts) { { a: 1, b: 2 } }
 
         it 'initializes class with opts merged with default_opts' do
-          expect(factory.create(:foo, b: 6)).to eq OpenStruct.new(a: 1, b: 6)
+          expect(factory.create(:foo, b: 6)).to eq Hash.new(a: 1, b: 6)
         end
       end
     end
@@ -34,7 +34,7 @@ describe DocTest::Factory do
       let(:default_opts) { { a: 1, b: 2 } }
 
       it 'initializes class with default_opts' do
-        expect(factory.create(:foo)).to eq OpenStruct.new(default_opts)
+        expect(factory.create(:foo)).to eq Hash.new(default_opts)
       end
     end
 

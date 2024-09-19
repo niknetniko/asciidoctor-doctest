@@ -131,7 +131,7 @@ module Asciidoctor
 
       # :nocov:
       def hash
-        self.class.hash ^ instance_values.hash
+        [self.class, instance_values].hash
       end
       # :nocov:
 
