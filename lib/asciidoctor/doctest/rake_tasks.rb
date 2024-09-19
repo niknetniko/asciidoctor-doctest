@@ -88,8 +88,7 @@ module Asciidoctor
       #        +:generate+ tasks.
       # @yield [self] Gives self to the block.
       #
-      def initialize(tasks_namespace = :doctest)
-        super
+      def initialize(tasks_namespace = :doctest) # rubocop:disable Lint/MissingSuper
         @tasks_namespace = tasks_namespace
         @test_description = DEFAULT_TEST_DESC
         @generate_description = DEFAULT_GENERATE_DESC
