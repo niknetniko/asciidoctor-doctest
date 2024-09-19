@@ -10,6 +10,7 @@ Feature: Generating output examples for a custom HTML backend
       Generating test examples *:* in examples/html
        --> Skipping document:title-with-author
        --> Generating inline_quoted:emphasis
+       --> Generating inline_quoted2:bold
        --> Unchanged quote:with-id-and-role
        --> Generating quote:with-title
        --> Skipping quote:with-attribution
@@ -69,6 +70,12 @@ Feature: Generating output examples for a custom HTML backend
       <em>chunky bacon</em>
 
       """
+    And the file "examples/html/inline_quoted2.html" should contain exactly:
+      """
+      <!-- .bold -->
+      <strong>skinny bacon</strong>
+
+      """
 
   Scenario: Regenerate all outdated output examples
     When I run `bundle exec rake doctest:generate FORCE=yes`
@@ -77,6 +84,7 @@ Feature: Generating output examples for a custom HTML backend
       Generating test examples *:* in examples/html
        --> Rewriting document:title-with-author
        --> Generating inline_quoted:emphasis
+       --> Generating inline_quoted2:bold
        --> Unchanged quote:with-id-and-role
        --> Generating quote:with-title
        --> Rewriting quote:with-attribution

@@ -9,7 +9,7 @@ Feature: Testing a custom HTML backend
       """
       Running DocTest for the templates: templates.
 
-      FS.SF
+      FSS.SF
       """
     Then the output should contain:
       """
@@ -35,7 +35,7 @@ Feature: Testing a custom HTML backend
       """
     And the output should contain:
       """
-      5 examples (1 passed, 2 failed, 2 skipped)
+      6 examples (1 passed, 2 failed, 3 skipped)
       """
     And the output should contain:
       """
@@ -49,6 +49,7 @@ Feature: Testing a custom HTML backend
 
       ✗  document:title-with-author
       ∅  inline_quoted:emphasis
+      ∅  inline_quoted2:bold
       ✓  quote:with-id-and-role
       ∅  quote:with-title
       ✗  quote:with-attribution
