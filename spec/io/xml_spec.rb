@@ -12,19 +12,19 @@ describe DocTest::IO::XML do
   end
 
   describe 'parsing/serialization:' do
-    context 'one example' do
+    context 'with one example' do
       shared_examples 'example' do
         let(:parsed) { suite.parse input, 's' }
         let(:serialized) { suite.serialize output }
 
-        it { (expect parsed).to have(1).items }
+        it { expect(parsed).to have(1).items }
 
         it 'returns an array with parsed example object' do
-          (expect parsed.first).to eql output
+          expect(parsed.first).to eql output
         end
 
         it 'returns a serialized example as string' do
-          (expect serialized).to eql input
+          expect(serialized).to eql input
         end
       end
 
@@ -114,7 +114,7 @@ describe DocTest::IO::XML do
       end
     end
 
-    context 'multiple examples' do
+    context 'with multiple examples' do
       subject(:parsed) { suite.parse input, 's' }
 
       let :input do

@@ -89,6 +89,7 @@ module Asciidoctor
       # @yield [self] Gives self to the block.
       #
       def initialize(tasks_namespace = :doctest)
+        super
         @tasks_namespace = tasks_namespace
         @test_description = DEFAULT_TEST_DESC
         @generate_description = DEFAULT_GENERATE_DESC

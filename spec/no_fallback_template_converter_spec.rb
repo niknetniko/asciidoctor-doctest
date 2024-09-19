@@ -3,10 +3,10 @@ describe DocTest::NoFallbackTemplateConverter do
 
   describe '#convert' do
     let(:converter) { delegator.__getobj__ }
-    let(:node) { double('Node', node_name: 'block_foo') }
+    let(:node) { instance_double('Node', node_name: 'block_foo') }
 
     before do
-      expect(converter).to receive(:handles?).with('block_foo').and_return(handles)
+      allow(converter).to receive(:handles?).with('block_foo').and_return(handles)
     end
 
     context 'when template is not found' do
@@ -26,7 +26,7 @@ describe DocTest::NoFallbackTemplateConverter do
       let(:handles) { true }
 
       it 'delegates to the original #convert and returns result' do
-        expect(converter).to receive(:convert)
+        allow(converter).to receive(:convert)
           .with(node, 'block_foo', {}).and_return('allons-y!')
 
         expect(delegator.convert(node)).to eq 'allons-y!'

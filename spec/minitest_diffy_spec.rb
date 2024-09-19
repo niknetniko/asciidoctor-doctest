@@ -15,7 +15,7 @@ describe Diffy::Format do
 
     it { expect(described_class).to have_method :minitest }
 
-    context 'line starting with ---, or +++' do
+    context 'with line starting with ---, or +++' do
       let(:input) { ['--- a/file.rb', '+++ b/file.rb'] }
 
       it 'discards the line' do
@@ -23,7 +23,7 @@ describe Diffy::Format do
       end
     end
 
-    context 'line with "\ No newline at end of file"' do
+    context 'with line with "\ No newline at end of file"' do
       let(:input) { ['\ No newline at end of file'] }
 
       it 'discards this line' do
@@ -31,7 +31,7 @@ describe Diffy::Format do
       end
     end
 
-    context 'line starting with +' do
+    context 'with line starting with +' do
       let(:input) { ['+ <div><p>chunky bacon</p></div>'] }
 
       it 'replaces "+" with "A", adds padding and colour' do
@@ -39,7 +39,7 @@ describe Diffy::Format do
       end
     end
 
-    context 'line starting with -' do
+    context 'with line starting with -' do
       let(:input) { ['- <p>chunky bacon</p>'] }
 
       it 'replaces "-" with "E", adds padding and colour' do
@@ -47,7 +47,7 @@ describe Diffy::Format do
       end
     end
 
-    context 'normal lines' do
+    context 'with normal lines' do
       let(:input) { ['Lorem ipsum dolor', '  sit amet'] }
 
       it 'returns the lines with padding' do

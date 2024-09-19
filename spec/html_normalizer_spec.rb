@@ -16,14 +16,14 @@ describe DocTest::HtmlNormalizer do
       expect(output).to eq '<section><p>Lorem ipsum</p></section>'
     end
 
-    context 'in "style" attribute' do
+    context 'with "style" attribute' do
       it 'sorts CSS declarations by name' do
         output = normalize %(<div style="width: 100%; color: 'red'; font-style: bold"></div>)
         expect(output).to eq %(<div style="color: 'red'; font-style: bold; width: 100%;"></div>)
       end
     end
 
-    context 'in text node' do
+    context 'with text node' do
       it 'strips nonsignificant leading and trailing whitespaces' do
         output = normalize "<p> Lorem<b> ipsum</b> dolor\n<br> sit <i>amet</i></p>"
         expect(output).to eq '<p>Lorem<b> ipsum</b> dolor<br>sit <i>amet</i></p>'
@@ -40,7 +40,7 @@ describe DocTest::HtmlNormalizer do
       end
     end
 
-    context 'in preformatted node or descendant' do
+    context 'with preformatted node or descendant' do
       it 'does not strip leading and trailing whitespaces' do
         input = "<pre> Lorem<b> ipsum</b> dolor\n<br> sit amet</pre>"
         expect(normalize(input)).to eq input

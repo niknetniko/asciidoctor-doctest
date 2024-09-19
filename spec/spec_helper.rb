@@ -12,7 +12,7 @@ require 'simplecov'
 require 'asciidoctor/doctest'
 require 'fakefs/spec_helpers'
 
-Dir['./spec/{shared_examples,support}/**/*.rb'].each { |file| require file }
+Dir['./spec/{shared_examples,support}/**/*.rb'].sort.each { |file| require file }
 
 RSpec.configure do |config|
   # rspec-expectations config

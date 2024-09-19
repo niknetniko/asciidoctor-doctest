@@ -31,7 +31,7 @@ shared_examples DocTest::IO::Base do
   end
 
   describe '#parse' do
-    context 'empty file' do
+    context 'with empty file' do
       subject { suite.parse '', 'block_ulist' }
 
       it { is_expected.to be_empty }
@@ -51,7 +51,9 @@ shared_examples DocTest::IO::Base do
 
       allow(suite).to receive(:parse) do |input, group_name|
         path, file_name, *example_names = input.split("\n")
+        # rubocop:disable RSpec/ExpectInHook
         expect(group_name).to eq file_name.split('.').first
+        # rubocop:enable RSpec/ExpectInHook
 
         example_names.map do |name|
           # this content is just filling to identify the example in test
@@ -161,7 +163,7 @@ shared_examples DocTest::IO::Base do
     end
 
     before do
-      expect(suite).to receive(:read_examples).twice do |group_name|
+      allow(suite).to receive(:read_examples).twice do |group_name|
         current.select { |e| e.group_name == group_name }
       end
     end
@@ -191,15 +193,15 @@ shared_examples DocTest::IO::Base do
     end
 
     before do
-      expect(ours_suite).to receive(:group_names)
+      allow(ours_suite).to receive(:group_names)
         .and_return(%w[gr0 gr1])
-      expect(theirs_suite).to receive(:read_examples)
+      allow(theirs_suite).to receive(:read_examples)
         .with(/gr[0-1]/).exactly(:twice).and_return(*theirs)
-      expect(ours_suite).to receive(:read_examples)
+      allow(ours_suite).to receive(:read_examples)
         .with(/gr[0-1]/).exactly(:twice).and_return(*ours)
     end
 
-    context do
+    context 'when order' do
       let :ours do
         [[ours_exmpl(0, 0), ours_exmpl(1, 0)], [ours_exmpl(0, 1), ours_exmpl(1, 1)]]
       end
@@ -217,7 +219,7 @@ shared_examples DocTest::IO::Base do
       let(:ours) { [(0..2).map { |i| ours_exmpl i }, []] }
       let(:theirs) { [[1, 0, 2].map { |i| theirs_exmpl i }, []] }
 
-      context 'in theirs suite' do
+      context 'with in their suite' do
         let(:theirs) { [[theirs_exmpl(2), theirs_exmpl(0)], []] }
 
         it 'returns pairs in ours order' do
@@ -229,7 +231,7 @@ shared_examples DocTest::IO::Base do
         end
       end
 
-      context 'in ours suite' do
+      context 'with in our suite' do
         let(:ours) { [[ours_exmpl(1), ours_exmpl(2)], []] }
 
         it 'returns pairs in ours order with the missing example at the end' do
@@ -250,20 +252,20 @@ shared_examples DocTest::IO::Base do
       end
     end
 
-    context 'empty' do
+    context 'when empty' do
       include_examples 'format options', {}, []
     end
 
-    context 'options with one value' do
+    context 'when options with one value' do
       include_examples 'format options', { opt1: 'val1', opt2: 'val2' }, [':opt1: val1', ':opt2: val2']
     end
 
-    context 'options with multiple values' do
+    context 'when options with multiple values' do
       include_examples 'format options', { opt1: %w[val11 val12], opt2: ['val2'] },
                        [':opt1: val11', ':opt1: val12', ':opt2: val2']
     end
 
-    context 'boolean options' do
+    context 'when boolean options' do
       include_examples 'format options', { opt1: true, opt2: false }, [':opt1:', ':opt2: false']
     end
   end

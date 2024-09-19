@@ -12,7 +12,7 @@ describe DocTest::IO::Asciidoc do
   end
 
   describe 'parsing/serialization:' do
-    context 'one example' do
+    context 'with one example' do
       shared_examples 'example' do
         let(:parsed) { suite.parse input, 's' }
         let(:serialized) { suite.serialize output }
@@ -111,7 +111,7 @@ describe DocTest::IO::Asciidoc do
       end
     end
 
-    context 'multiple examples' do
+    context 'with multiple examples' do
       subject(:parsed) { suite.parse input, 's' }
 
       let :input do

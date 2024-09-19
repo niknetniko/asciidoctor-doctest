@@ -6,7 +6,7 @@ describe DocTest::Example do
   end
 
   describe '#name' do
-    it 'returns #{group_name}:#{local_name}' do
+    it 'returns #{group_name}:#{local_name}' do # rubocop:disable Lint/InterpolationCheck
       o.group_name = 'block_olist'
       o.local_name = 'with-start'
 
@@ -47,7 +47,7 @@ describe DocTest::Example do
         end
       end
 
-      ['block_foo:with-title', 'block_ulist:foo', 'foo:*' + '*:foo', 'foo'].each do |pattern|
+      ['block_foo:with-title', 'block_ulist:foo', 'foo:**:foo', 'foo'].each do |pattern|
         it "returns false for #{pattern}" do
           expect(o.name_match?(pattern)).to be_falsy
         end
@@ -153,7 +153,7 @@ describe DocTest::Example do
     end
 
     it 'returns false for instances with different content' do
-      expect(second).to receive(:content).and_return('ALLONS-Y!')
+      allow(second).to receive(:content).and_return('ALLONS-Y!')
       expect(first).not_to eq second
     end
   end

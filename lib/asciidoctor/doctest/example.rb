@@ -9,7 +9,7 @@ module Asciidoctor
     ##
     # This class represents a single test example.
     class Example
-      NAME_SEPARATOR = ':'
+      NAME_SEPARATOR = ':'.freeze
 
       # @return [String] the first part of the name.
       attr_accessor :group_name

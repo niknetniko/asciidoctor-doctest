@@ -51,7 +51,7 @@ module Asciidoctor::DocTest
           [].push(".#{exmpl.local_name}")
             .push(*exmpl.desc.lines.map(&:chomp))
             .push(*format_options(exmpl.opts))
-            .map { |s| '// ' + s }
+            .map { |s| "// #{s}" }
             .push(exmpl.content.presence)
             .compact
             .join("\n")

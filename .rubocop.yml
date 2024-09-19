@@ -22,6 +22,51 @@ Naming/HeredocDelimiterNaming:
 RSpec/MessageSpies:
   Enabled: false
 
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/SubjectStub:
+  Enabled: false
+
+RSpec/VerifiedDoubleReference:
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Max: 300
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringConcatenation:
+  Enabled: false
+
+RSpec/NoExpectationExample:
+  Enabled: false
+
 #Lint/UnusedMethodArgument:
 #  Enabled: false
 #
@@ -61,9 +106,15 @@ RSpec/MessageSpies:
 #Style/EmptyLinesAroundModuleBody:
 #  Enabled: false
 #
-#Style/FileName:
-#  Exclude: [ 'lib/asciidoctor-doctest.rb' ]
-#
+Style/FileName:
+  Exclude: [ 'lib/asciidoctor-doctest.rb' ]
+
+Lint/DuplicateMethods:
+  Enabled: false
+
+Rake/Desc:
+  Enabled: false
+
 #Style/HashSyntax:
 #  Exclude: [ '**/Rakefile' ]
 #

@@ -35,7 +35,7 @@ module DocTest
       subject(:result) { convert_examples input, output }
 
       before do
-        expect(converter).to receive(:convert)
+        allow(converter).to receive(:convert)
           .with(input.content, converter_opts).and_return(rendered)
       end
 
@@ -61,7 +61,7 @@ module DocTest
       context 'with :header_footer option' do
         let(:converter_opts) { { header_footer: true } }
 
-        context 'specified in output example' do
+        context 'when specified in output example' do
           let(:output_opts) { { header_footer: true } }
 
           it 'renders content with :header_footer => true' do
@@ -69,7 +69,7 @@ module DocTest
           end
         end
 
-        context 'specified in input example' do
+        context 'when specified in input example' do
           let(:input_opts) { { header_footer: true } }
 
           it 'renders content with :header_footer => true' do

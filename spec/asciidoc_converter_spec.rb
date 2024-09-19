@@ -17,7 +17,7 @@ describe DocTest::AsciidocConverter do
 
       it { is_expected.to include backend: 'html5' }
 
-      context 'empty string' do
+      context 'and empty string' do
         subject { described_class.new(backend_name: '').opts }
 
         it { is_expected.not_to include :backend }
@@ -33,7 +33,7 @@ describe DocTest::AsciidocConverter do
 
       before { FileUtils.mkpath template_dirs[0] }
 
-      context 'that exists' do
+      context 'when it exists' do
         it do
           expect(subject).to include(
             template_dirs: template_dirs,
@@ -57,7 +57,7 @@ describe DocTest::AsciidocConverter do
         end
       end
 
-      context "that doesn't exist" do
+      context "with it doesn't exist" do
         let(:template_dirs) { ['/tmp/html5', '/tmp/revealjs'] }
 
         it { expect { subject }.to raise_error ArgumentError }

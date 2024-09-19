@@ -62,7 +62,7 @@ module Asciidoctor::DocTest
             *format_options(exmpl.opts)
           ].compact
 
-          header_str = header.one? ? (header.first + ' ') : (header.join("\n") + "\n")
+          header_str = header.one? ? "#{header.first} " : (header.join("\n") + "\n")
           ["<!-- #{header_str}-->", exmpl.content.presence].compact.join("\n") + "\n"
         end.join("\n")
       end

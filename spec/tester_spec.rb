@@ -1,10 +1,12 @@
 describe DocTest::Tester do
   subject(:tester) { described_class.new(input_suite, output_suite, converter, reporter) }
 
-  let(:converter) { double 'converter' }
-  let(:input_suite) { double 'ExamplesSuite' }
-  let(:output_suite) { double 'ExamplesSuite' }
+  let(:converter) { instance_double 'converter' }
+  let(:input_suite) { instance_double 'ExamplesSuite' }
+  let(:output_suite) { instance_double 'ExamplesSuite' }
+  # rubocop:disable RSpec/VerifiedDoubles
   let(:reporter) { spy 'Reporter' }
+  # rubocop:enable RSpec/VerifiedDoubles
   let(:examples) { fixtures }
 
   describe '#initialize' do
