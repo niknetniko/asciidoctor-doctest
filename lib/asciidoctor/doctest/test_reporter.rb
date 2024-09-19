@@ -70,7 +70,7 @@ module Asciidoctor
           ("#{skips} skipped".color(:cyan) if skips > 0)
         ].compact.join(', ') + ")\n\n")
 
-        str << "Finished in %.3f s.\n".format(total_time)
+        str << format("Finished in %.3f s.\n", total_time)
 
         str << "\nYou have skipped tests. Run with VERBOSE=yes for details.\n" if results.any?(&:skipped?) && !verbose?
 
