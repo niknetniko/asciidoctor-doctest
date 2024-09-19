@@ -24,8 +24,8 @@ A tool for end-to-end testing of Asciidoctor backends based on comparing of text
   s.add_runtime_dependency 'corefines', '~> 1.2'
   s.add_runtime_dependency 'diffy', '~> 3.0'
   s.add_runtime_dependency 'htmlbeautifier', '~> 1.0'
-  s.add_runtime_dependency 'minitest', '~> 5.4'
-  s.add_runtime_dependency 'nokogiri', '= 1.13.0'
+  s.add_runtime_dependency 'minitest', '~> 5.25'
+  s.add_runtime_dependency 'nokogiri', '~> 1.16'
 
   # development
   s.add_development_dependency 'bundler', '>= 1.6'
