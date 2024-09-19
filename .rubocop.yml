@@ -1,7 +1,12 @@
+---
+
 require:
 - rubocop-minitest
 - rubocop-rake
 - rubocop-rspec
+
+AllCops:
+  NewCops: enable
 
 Lint/DuplicateMethods:
   Enabled: false
