@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 require 'asciidoctor'
 require 'asciidoctor/doctest/no_fallback_template_converter'
 require 'corefines'
 
 using Corefines::Hash[:rekey, :+]
-using Corefines::Object::blank?
+using Corefines::Object.blank?
 
 module Asciidoctor
   module DocTest
@@ -12,7 +13,6 @@ module Asciidoctor
     # This class is basically a wrapper for +Asciidoctor.convert+ that allows to
     # preset and validate some common parameters.
     class AsciidocConverter
-
       # @return [Hash] the default options to be passed to Asciidoctor.
       attr_reader :default_opts
 
@@ -48,11 +48,11 @@ module Asciidoctor
       #        exist or is not a directory.
       #
       def initialize(opts = {})
-        opts = opts.rekey(&:to_sym).rekey(:backend_name => :backend)
+        opts = opts.rekey(&:to_sym).rekey(backend_name: :backend)
 
         template_dirs = Array(opts[:template_dirs]).freeze
         template_dirs.each do |path|
-          fail ArgumentError, "Templates directory '#{path}' doesn't exist!" unless Dir.exist? path
+          raise ArgumentError, "Templates directory '#{path}' doesn't exist!" unless Dir.exist? path
         end
 
         unless template_dirs.empty?
@@ -79,8 +79,8 @@ module Asciidoctor
         Asciidoctor.convert(text.to_s, @default_opts + opts)
       end
 
-      alias_method :opts, :default_opts
-      alias_method :call, :convert
+      alias opts default_opts
+      alias call convert
     end
   end
 end

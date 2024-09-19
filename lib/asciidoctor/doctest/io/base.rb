@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require 'corefines'
 require 'pathname'
 
-using Corefines::Object::blank?
-using Corefines::Enumerable::index_by
+using Corefines::Object.blank?
+using Corefines::Enumerable.index_by
 
 module Asciidoctor::DocTest
   module IO
@@ -12,7 +13,6 @@ module Asciidoctor::DocTest
     # This is a base class that should be extended for specific example
     # formats.
     class Base
-
       attr_reader :path, :file_ext
 
       ##
@@ -23,7 +23,7 @@ module Asciidoctor::DocTest
       #        examples group files. Must not be +nil+ or blank. (required)
       #
       def initialize(path: DocTest.examples_path, file_ext: nil)
-        fail ArgumentError, 'file_ext must not be blank or nil' if file_ext.blank?
+        raise ArgumentError, 'file_ext must not be blank or nil' if file_ext.blank?
 
         @path = Array(path).freeze
         @file_ext = file_ext.strip.freeze
@@ -40,7 +40,7 @@ module Asciidoctor::DocTest
       # @return [Array<Example>] parsed examples.
       # :nocov:
       def parse(input, group_name)
-        fail NotImplementedError
+        raise NotImplementedError
       end
       # :nocov:
 
@@ -52,7 +52,7 @@ module Asciidoctor::DocTest
       # @return [String]
       # :nocov:
       def serialize(examples)
-        fail NotImplementedError
+        raise NotImplementedError
       end
       # :nocov:
 
@@ -99,9 +99,9 @@ module Asciidoctor::DocTest
       #
       def read_examples(group_name)
         @examples_cache[group_name] ||= read_files(group_name)
-          .map { |data| parse(data, group_name) }
-          .flatten
-          .uniq(&:name)
+                                        .map { |data| parse(data, group_name) }
+                                        .flatten
+                                        .uniq(&:name)
       end
 
       ##
@@ -127,13 +127,13 @@ module Asciidoctor::DocTest
       def update_examples(examples)
         examples.group_by(&:group_name).each do |group, exmpls|
           # replace cached examples with the given ones and preserve original order
-          updated_group = [ read_examples(group), exmpls ]
-            .map { |e| e.index_by(&:local_name) }
-            .reduce(:merge)
-            .values
+          updated_group = [read_examples(group), exmpls]
+                          .map { |e| e.index_by(&:local_name) }
+                          .reduce(:merge)
+                          .values
 
           write_examples updated_group
-          @examples_cache.delete(group)  # flush cache
+          @examples_cache.delete(group) # flush cache
         end
       end
 
@@ -144,11 +144,11 @@ module Asciidoctor::DocTest
       # @return [Array<String>]
       #
       def group_names
-        @path.reduce(Set.new) { |acc, path|
+        @path.reduce(Set.new) do |acc, path|
           acc | Pathname.new(path).each_child
-            .select { |p| p.file? && p.extname == @file_ext }
-            .map { |p| p.sub_ext('').basename.to_s }
-        }.sort
+                        .select { |p| p.file? && p.extname == @file_ext }
+                        .map { |p| p.sub_ext('').basename.to_s }
+        end.sort
       end
 
       protected

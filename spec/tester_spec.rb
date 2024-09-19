@@ -1,5 +1,4 @@
 describe DocTest::Tester do
-
   subject(:tester) { described_class.new(input_suite, output_suite, converter, reporter) }
 
   let(:converter) { double 'converter' }
@@ -8,30 +7,25 @@ describe DocTest::Tester do
   let(:reporter) { spy 'Reporter' }
   let(:examples) { fixtures }
 
-
   describe '#initialize' do
-
-    context "with default reporter" do
+    context 'with default reporter' do
       subject(:tester) { described_class.new(input_suite, output_suite, converter, nil) }
 
       it { expect(tester.reporter).to be_a DocTest::TestReporter }
     end
   end
 
-
   describe '#run_tests' do
-
     before do |ex|
       next if ex.metadata[:skip_before]
 
-      expect(input_suite).to receive(:pair_with)
-          .with(output_suite).and_return(examples.values)
+      allow(input_suite).to receive(:pair_with)
+        .with(output_suite).and_return(examples.values)
       allow(tester).to receive(:test_example)
     end
 
-    context "with default pattern" do
-
-      it "pairs the examples and tests all valid pairs" do
+    context 'with default pattern' do
+      it 'pairs the examples and tests all valid pairs' do
         ['ex:alpha', 'ex:beta', 'ex:nooutput'].each do |name|
           expect(tester).to receive(:test_example).with(*examples[name])
         end
@@ -39,16 +33,15 @@ describe DocTest::Tester do
       end
     end
 
-    context "with specific pattern" do
-
-      it "pairs the examples and tests those matching the pattern" do
+    context 'with specific pattern' do
+      it 'pairs the examples and tests those matching the pattern' do
         expect(tester).to receive(:test_example).with(*examples['ex:beta'])
         tester.run_tests(pattern: 'ex:b*')
       end
     end
 
-    it "ignores pairs with empty input example" do
-      expect(tester).to_not receive(:test_example).with(*examples['ex:noinput'])
+    it 'ignores pairs with empty input example' do
+      expect(tester).not_to receive(:test_example).with(*examples['ex:noinput'])
       tester.run_tests
     end
 
@@ -62,9 +55,7 @@ describe DocTest::Tester do
     end
   end
 
-
   describe '#test_example' do
-
     subject(:failures) { tester.test_example input_exmpl, output_exmpl }
 
     let(:examples_pair) { examples['ex:alpha'] }
@@ -73,8 +64,8 @@ describe DocTest::Tester do
     let(:actual) { output_exmpl.content }
     let(:expected) { output_exmpl.content }
 
-    shared_examples :example do
-      it "calls reporter" do
+    shared_examples 'example' do
+      it 'calls reporter' do
         expect(reporter).to receive(:record)
         tester.test_example input_exmpl, output_exmpl
       end
@@ -83,71 +74,64 @@ describe DocTest::Tester do
     before do |ex|
       next if ex.metadata[:skip_before]
 
-      expect(converter).to receive(:convert_examples)
+      allow(converter).to receive(:convert_examples)
         .with(input_exmpl, output_exmpl)
         .and_return([actual, expected])
     end
 
-
-    context "when output example is empty", :skip_before do
-
+    context 'when output example is empty', :skip_before do
       let(:examples_pair) { examples['ex:nooutput'] }
 
-      it "skips the test" do
-        is_expected.to contain_exactly Minitest::Skip
+      it 'skips the test' do
+        expect(subject).to contain_exactly Minitest::Skip
       end
 
-      include_examples :example
+      include_examples 'example'
     end
 
-    context "when examples are equivalent" do
-
-      it "returns no failure" do
-        is_expected.to be_empty
+    context 'when examples are equivalent' do
+      it 'returns no failure' do
+        expect(subject).to be_empty
       end
 
-      include_examples :example
+      include_examples 'example'
     end
 
-    context "when examples are not equivalent" do
-
+    context 'when examples are not equivalent' do
       let(:actual) { '<em>meh</em>' }
 
-      it "returns failure" do
-        is_expected.to include Minitest::Assertion
+      it 'returns failure' do
+        expect(subject).to include Minitest::Assertion
       end
 
-      context "and input example has desc:" do
-
-        it "returns failure with message that starts with the desc" do
-          expect(failures.first.message).to match /^yada.*/
+      context 'and input example has desc:' do
+        it 'returns failure with message that starts with the desc' do
+          expect(failures.first.message).to match(/^yada.*/)
         end
       end
 
-      context "and both input and output examples have desc:" do
-
+      context 'and both input and output examples have desc:' do
         let(:examples_pair) { examples['ex:beta'] }
 
         it "returns failure with message that starts with the output's example desc" do
-          expect(failures.first.message).to match /^Yoda.*/
+          expect(failures.first.message).to match(/^Yoda.*/)
         end
       end
 
-      include_examples :example
+      include_examples 'example'
     end
   end
 
-
   def fixtures
     data = {
-      'ex:alpha'    => [ {content: '_alpha_', desc: 'yada'}, {content: '<i>alpha</i>'}              ],
-      'ex:beta'     => [ {content: '*beta*',  desc: 'yada'}, {content: '<b>beta</b>', desc: 'Yoda'} ],
-      'ex:noinput'  => [ {},                                 {content: '<del>noinput</del>'}        ],
-      'ex:nooutput' => [ {content: 'nooutput'},              {}                                     ]
+      'ex:alpha' => [{ content: '_alpha_', desc: 'yada' }, { content: '<i>alpha</i>' }],
+      'ex:beta' => [{ content: '*beta*', desc: 'yada' }, { content: '<b>beta</b>', desc: 'Yoda' }],
+      'ex:noinput' => [{}, { content: '<del>noinput</del>' }],
+      'ex:nooutput' => [{ content: 'nooutput' }, {}]
     }
-    data = data.map { |name, tuple|
-      [ name, tuple.map { |opts| DocTest::Example.new(name, **opts) } ]
-    }
+    data = data.map do |name, tuple|
+      [name, tuple.map { |opts| DocTest::Example.new(name, **opts) }]
+    end
     Hash[data]
   end
 end

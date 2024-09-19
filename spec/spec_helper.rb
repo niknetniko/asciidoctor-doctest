@@ -15,10 +15,8 @@ require 'fakefs/spec_helpers'
 Dir['./spec/{shared_examples,support}/**/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
-
   # rspec-expectations config
   config.expect_with :rspec do |expects|
-
     # This option disables deprecated 'should' syntax.
     expects.syntax = :expect
 
@@ -33,7 +31,6 @@ RSpec.configure do |config|
 
   # rspec-mocks config
   config.mock_with :rspec do |mocks|
-
     # Prevents you from mocking or stubbing a method that does not exist on
     # a real object.
     mocks.verify_partial_doubles = true

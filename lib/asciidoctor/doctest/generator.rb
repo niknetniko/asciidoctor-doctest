@@ -1,13 +1,13 @@
 # frozen_string_literal: true
+
 require 'asciidoctor'
 require 'corefines'
 
-using Corefines::String::color
+using Corefines::String.color
 
 module Asciidoctor
   module DocTest
     class Generator
-
       ##
       # @param input_suite [IO::Base] an instance of {IO::Base} subclass to
       #        read the reference input examples.
@@ -44,7 +44,7 @@ module Asciidoctor
         @input_suite.pair_with(@output_suite).each do |input, output|
           next unless input.name_match? pattern
 
-          log = ->(msg, color = :default) do
+          log = lambda do |msg, color = :default|
             @io << " --> #{(msg % input.name).color(color)}\n" if @io
           end
 

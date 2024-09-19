@@ -1,4 +1,5 @@
 # frozen_string_literal: false
+
 require 'corefines'
 
 using Corefines::Object[:blank?, :deep_dup, :instance_values]
@@ -8,7 +9,6 @@ module Asciidoctor
     ##
     # This class represents a single test example.
     class Example
-
       NAME_SEPARATOR = ':'
 
       # @return [String] the first part of the name.
@@ -113,7 +113,7 @@ module Asciidoctor
       #         +group_name+, +local_name+ and +content+ (compared using +==+),
       #         otherwise +false+.
       def ==(other)
-        [:group_name, :local_name, :content].all? do |name|
+        %i[group_name local_name content].all? do |name|
           other.respond_to?(name) &&
             public_send(name) == other.public_send(name)
         end
@@ -137,7 +137,7 @@ module Asciidoctor
 
       private
 
-      def initialize_copy(source)
+      def initialize_copy(_source)
         instance_variables.each do |name|
           instance_variable_set name, instance_variable_get(name).deep_dup
         end

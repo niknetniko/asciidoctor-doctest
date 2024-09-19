@@ -1,66 +1,90 @@
-Lint/UnusedMethodArgument:
+require:
+  - rubocop-minitest
+  - rubocop-rake
+  - rubocop-rspec
+
+RSpec/ContextWording:
+   AllowedPatterns:
+     - ^and
+
+RSpec/NestedGroups:
   Enabled: false
 
-Metrics/LineLength:
-  Max: 100
-
-Metrics/MethodLength:
-  Max: 15
-
-Metrics/ParameterLists:
-  CountKeywordArgs: false
-
-Style/AlignHash:
-  EnforcedLastArgumentHashStyle: always_ignore
-
-Style/Blocks:
+RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
-Style/ClassAndModuleChildren:
+RSpec/NamedSubject:
   Enabled: false
 
-Style/Documentation:
+Naming/HeredocDelimiterNaming:
   Enabled: false
 
-Style/DoubleNegation:
+RSpec/MessageSpies:
   Enabled: false
 
-Style/EmptyLines:
-  Enabled: false
-
-Style/EmptyLinesAroundBlockBody:
-  Exclude: [ 'spec/**/*.rb' ]
-
-Style/EmptyLinesAroundClassBody:
-  Enabled: false
-
-Style/EmptyLinesAroundModuleBody:
-  Enabled: false
-
-Style/FileName:
-  Exclude: [ 'lib/asciidoctor-doctest.rb' ]
-
-Style/HashSyntax:
-  Exclude: [ '**/Rakefile' ]
-
-Style/Lambda:
-  Enabled: false
-
-Style/MultilineOperationIndentation:
-  EnforcedStyle: indented
-
-Style/PercentLiteralDelimiters:
-  PreferredDelimiters:
-    '%w': '[]'
-
-Style/PerlBackrefs:
-  Enabled: false
-
-Style/SpaceInsideBrackets:
-  Enabled: false
-
-Style/SpaceInsideHashLiteralBraces:
-  Enabled: false
-
-Style/WordArray:
-  MinSize: 2
+#Lint/UnusedMethodArgument:
+#  Enabled: false
+#
+#Metrics/LineLength:
+#  Max: 100
+#
+#Metrics/MethodLength:
+#  Max: 15
+#
+#Metrics/ParameterLists:
+#  CountKeywordArgs: false
+#
+#Style/AlignHash:
+#  EnforcedLastArgumentHashStyle: always_ignore
+#
+#Style/Blocks:
+#  Enabled: false
+#
+#Style/ClassAndModuleChildren:
+#  Enabled: false
+#
+#Style/Documentation:
+#  Enabled: false
+#
+#Style/DoubleNegation:
+#  Enabled: false
+#
+#Style/EmptyLines:
+#  Enabled: false
+#
+#Style/EmptyLinesAroundBlockBody:
+#  Exclude: [ 'spec/**/*.rb' ]
+#
+#Style/EmptyLinesAroundClassBody:
+#  Enabled: false
+#
+#Style/EmptyLinesAroundModuleBody:
+#  Enabled: false
+#
+#Style/FileName:
+#  Exclude: [ 'lib/asciidoctor-doctest.rb' ]
+#
+#Style/HashSyntax:
+#  Exclude: [ '**/Rakefile' ]
+#
+#Style/Lambda:
+#  Enabled: false
+#
+#Style/MultilineOperationIndentation:
+#  EnforcedStyle: indented
+#
+#Style/PercentLiteralDelimiters:
+#  PreferredDelimiters:
+#    '%w': '[]'
+#
+#Style/PerlBackrefs:
+#  Enabled: false
+#
+#Style/SpaceInsideBrackets:
+#  Enabled: false
+#
+#Style/SpaceInsideHashLiteralBraces:
+#  Enabled: false
+#
+#Style/WordArray:
+#  MinSize: 2

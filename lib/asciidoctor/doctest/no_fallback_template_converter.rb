@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'asciidoctor/converter/template'
 require 'delegate'
 
@@ -37,7 +38,7 @@ module Asciidoctor
       end
 
       # Alias for backward compatibility.
-      alias_method :convert_with_options, :convert
+      alias convert_with_options convert
     end
   end
 end

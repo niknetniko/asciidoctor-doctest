@@ -1,35 +1,34 @@
 require 'fileutils'
 require 'forwardable'
 
-using Corefines::Array::second
+using Corefines::Array.second
 
 shared_examples DocTest::IO::Base do
-
   subject(:suite) { described_class.new(file_ext: '.adoc', path: path) }
+
   let(:path) { ['/tmp/alpha', '/tmp/beta'] }
 
-
   describe '#initialize' do
-
     subject(:init) { described_class.new(**args) }
+
     let(:args) { {} }
 
-    {'nil' => nil, 'blank' => ' '}.each do |desc, file_ext|
+    { 'nil' => nil, 'blank' => ' ' }.each do |desc, file_ext|
       context "with file_ext #{desc}" do
-        let(:args) { {file_ext: file_ext, path: path} }
+        let(:args) { { file_ext: file_ext, path: path } }
+
         it { expect { init }.to raise_error ArgumentError }
       end
     end
 
     context 'with path string' do
-      let(:args) { {file_ext: '.html', path: '/foo/bar'} }
+      let(:args) { { file_ext: '.html', path: '/foo/bar' } }
 
       it 'wraps string to array' do
-        is_expected.to have_attributes(path: ['/foo/bar'])
+        expect(subject).to have_attributes(path: ['/foo/bar'])
       end
     end
   end
-
 
   describe '#parse' do
     context 'empty file' do
@@ -38,7 +37,6 @@ shared_examples DocTest::IO::Base do
       it { is_expected.to be_empty }
     end
   end
-
 
   describe '#read_examples' do
     include FakeFS::SpecHelpers
@@ -80,7 +78,7 @@ shared_examples DocTest::IO::Base do
       end
 
       it 'returns parsed examples' do
-        is_expected.to eq examples
+        expect(subject).to eq examples
       end
     end
 
@@ -92,11 +90,10 @@ shared_examples DocTest::IO::Base do
       end
 
       it 'returns parsed examples without duplicates (first wins)' do
-        is_expected.to eq examples
+        expect(subject).to eq examples
       end
     end
   end
-
 
   describe '#write_examples' do
     include FakeFS::SpecHelpers
@@ -118,7 +115,6 @@ shared_examples DocTest::IO::Base do
     end
   end
 
-
   describe '#file_names' do
     include FakeFS::SpecHelpers
 
@@ -134,7 +130,7 @@ shared_examples DocTest::IO::Base do
       %w[block_image.html block_ulist.adoc].each do |name|
         File.write "#{path.first}/#{name}", 'yada'
       end
-      is_expected.to contain_exactly 'block_ulist'
+      expect(subject).to contain_exactly 'block_ulist'
     end
 
     it 'returns names sorted and deduplicated' do
@@ -142,48 +138,45 @@ shared_examples DocTest::IO::Base do
         File.write "#{path[i % 2]}/#{name}.adoc", 'yada'
       end
 
-      is_expected.to eq names.uniq.sort
+      expect(subject).to eq names.uniq.sort
     end
 
     it 'ignores directories and files in subdirectories' do
       Dir.mkdir "#{path.first}/invalid.adoc"
       File.write "#{path.first}/invalid.adoc/wat.adoc", 'yada'
 
-      is_expected.to be_empty
+      expect(subject).to be_empty
     end
   end
 
-
   describe '#update_examples' do
-
     let :current do
       %w[gr0:ex0 gr0:ex1 gr1:ex0 gr1:ex1].map do |name|
         create_example name, content: name.reverse
       end
     end
     let :updated do
-      [ (create_example 'gr0:ex0', content: 'allons-y!'),
-        (create_example 'gr1:ex1', content: 'allons-y!') ]
+      [(create_example 'gr0:ex0', content: 'allons-y!'),
+       (create_example 'gr1:ex1', content: 'allons-y!')]
     end
 
     before do
-      expect(suite).to receive(:read_examples).exactly(2).times do |group_name|
+      expect(suite).to receive(:read_examples).twice do |group_name|
         current.select { |e| e.group_name == group_name }
       end
     end
 
     it 'merges current and updated examples and writes them' do
-      is_expected.to receive(:write_examples).with [updated[0], current[1]]
-      is_expected.to receive(:write_examples).with [current[2], updated[1]]
+      expect(subject).to receive(:write_examples).with [updated[0], current[1]]
+      expect(subject).to receive(:write_examples).with [current[2], updated[1]]
 
       suite.update_examples updated
     end
   end
 
-
   describe '#pair_with' do
-
     subject(:result) { ours_suite.pair_with(theirs_suite).to_a }
+
     let(:result_names) { result.map(&:first).map(&:name) }
 
     let(:ours_suite) { described_class.new(file_ext: '.xyz') }
@@ -199,7 +192,7 @@ shared_examples DocTest::IO::Base do
 
     before do
       expect(ours_suite).to receive(:group_names)
-        .and_return(['gr0', 'gr1'])
+        .and_return(%w[gr0 gr1])
       expect(theirs_suite).to receive(:read_examples)
         .with(/gr[0-1]/).exactly(:twice).and_return(*theirs)
       expect(ours_suite).to receive(:read_examples)
@@ -208,10 +201,10 @@ shared_examples DocTest::IO::Base do
 
     context do
       let :ours do
-        [ [ ours_exmpl(0, 0), ours_exmpl(1, 0) ], [ ours_exmpl(0, 1), ours_exmpl(1, 1) ] ]
+        [[ours_exmpl(0, 0), ours_exmpl(1, 0)], [ours_exmpl(0, 1), ours_exmpl(1, 1)]]
       end
       let :theirs do
-        [ [ theirs_exmpl(1, 0), theirs_exmpl(0, 0) ], [ theirs_exmpl(0, 1), theirs_exmpl(1, 1) ] ]
+        [[theirs_exmpl(1, 0), theirs_exmpl(0, 0)], [theirs_exmpl(0, 1), theirs_exmpl(1, 1)]]
       end
 
       it 'returns pairs of ours/theirs examples in ours order' do
@@ -225,7 +218,7 @@ shared_examples DocTest::IO::Base do
       let(:theirs) { [[1, 0, 2].map { |i| theirs_exmpl i }, []] }
 
       context 'in theirs suite' do
-        let(:theirs) { [ [theirs_exmpl(2), theirs_exmpl(0)], [] ] }
+        let(:theirs) { [[theirs_exmpl(2), theirs_exmpl(0)], []] }
 
         it 'returns pairs in ours order' do
           expect(result_names).to eq %w[gr0:ex0 gr0:ex1 gr0:ex2]
@@ -237,7 +230,7 @@ shared_examples DocTest::IO::Base do
       end
 
       context 'in ours suite' do
-        let(:ours) { [ [ours_exmpl(1), ours_exmpl(2)], [] ] }
+        let(:ours) { [[ours_exmpl(1), ours_exmpl(2)], []] }
 
         it 'returns pairs in ours order with the missing example at the end' do
           expect(result_names).to eq %w[gr0:ex1 gr0:ex2 gr0:ex0]
@@ -250,33 +243,30 @@ shared_examples DocTest::IO::Base do
     end
   end
 
-
   describe '#format_options' do
-
-    shared_examples :format_options do |input, output|
+    shared_examples 'format options' do |input, output|
       it "returns #{output} for #{input}" do
         expect(suite.send(:format_options, input)).to eq output
       end
     end
 
     context 'empty' do
-      include_examples :format_options, {}, []
+      include_examples 'format options', {}, []
     end
 
     context 'options with one value' do
-      include_examples :format_options, {opt1: 'val1', opt2: 'val2'}, [':opt1: val1', ':opt2: val2']
+      include_examples 'format options', { opt1: 'val1', opt2: 'val2' }, [':opt1: val1', ':opt2: val2']
     end
 
     context 'options with multiple values' do
-      include_examples :format_options, {opt1: %w[val11 val12], opt2: ['val2']},
+      include_examples 'format options', { opt1: %w[val11 val12], opt2: ['val2'] },
                        [':opt1: val11', ':opt1: val12', ':opt2: val2']
     end
 
     context 'boolean options' do
-      include_examples :format_options, {opt1: true, opt2: false}, [':opt1:', ':opt2: false']
+      include_examples 'format options', { opt1: true, opt2: false }, [':opt1:', ':opt2: false']
     end
   end
-
 
   def create_and_write_group(path, group_name, file_ext, *examples)
     content = [path, group_name + file_ext, *examples].join("\n")

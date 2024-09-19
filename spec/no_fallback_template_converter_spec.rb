@@ -1,9 +1,7 @@
 describe DocTest::NoFallbackTemplateConverter do
-
   subject(:delegator) { described_class.new('html5', template_dirs: ['/tmp/html5']) }
 
   describe '#convert' do
-
     let(:converter) { delegator.__getobj__ }
     let(:node) { double('Node', node_name: 'block_foo') }
 
@@ -15,8 +13,8 @@ describe DocTest::NoFallbackTemplateConverter do
       let(:handles) { false }
 
       it 'returns a not found marker instead of converted node' do
-        expect(converter).to_not receive(:convert)
-        expect(delegator.convert node).to eq described_class::NOT_FOUND_MARKER
+        expect(converter).not_to receive(:convert)
+        expect(delegator.convert(node)).to eq described_class::NOT_FOUND_MARKER
       end
 
       it 'prints a warning on stderr' do
@@ -31,7 +29,7 @@ describe DocTest::NoFallbackTemplateConverter do
         expect(converter).to receive(:convert)
           .with(node, 'block_foo', {}).and_return('allons-y!')
 
-        expect(delegator.convert node).to eq 'allons-y!'
+        expect(delegator.convert(node)).to eq 'allons-y!'
       end
     end
   end

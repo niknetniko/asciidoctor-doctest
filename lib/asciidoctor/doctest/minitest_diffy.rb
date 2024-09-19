@@ -1,15 +1,15 @@
 # frozen_string_literal: true
+
 require 'corefines'
 require 'diffy'
 
-using Corefines::String::color
+using Corefines::String.color
 
 module Asciidoctor
   module DocTest
     ##
     # Module to be included into +Minitest::Test+ to use Diffy for diff.
     module MinitestDiffy
-
       # @private
       def self.included(base)
         base.make_my_diffs_pretty!
@@ -50,7 +50,6 @@ end
 
 module Diffy
   module Format
-
     ##
     # ANSI color output suitable for terminal, customized for minitest.
     def minitest
@@ -64,7 +63,7 @@ module Diffy
         when /^\+/
           line.chomp.sub(/^\+/, 'A' + padding).color(:red)
         when /^-/
-          line.chomp.sub(/^\-/, 'E' + padding).color(:green)
+          line.chomp.sub(/^-/, 'E' + padding).color(:green)
         else
           padding + line.chomp
         end

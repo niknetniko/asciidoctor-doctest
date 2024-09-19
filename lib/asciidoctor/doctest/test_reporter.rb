@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# coding: utf-8
+
 require 'minitest'
 
 using Corefines::String[:color, :indent]
@@ -9,7 +9,6 @@ module Asciidoctor
     ##
     # This class is responsible for printing a formatted output of the test run.
     class TestReporter < Minitest::StatisticsReporter
-
       RESULT_COLOR  = { :'.' => :green, E: :yellow, F: :red, S: :cyan }
       RESULT_SYMBOL = { :'.' => '✓', E: '⚠', F: '✗', S: '∅' }
 
@@ -29,7 +28,7 @@ module Asciidoctor
         result.extend ResultExt
 
         if verbose?
-          io.puts [ result.symbol.color(result.color), result.name ].join('  ')
+          io.puts [result.symbol.color(result.color), result.name].join('  ')
         else
           io.print result.result_code.color(result.color)
         end
@@ -73,9 +72,7 @@ module Asciidoctor
 
         str << "Finished in %.3f s.\n" % total_time
 
-        if results.any?(&:skipped?) && !verbose?
-          str << "\nYou have skipped tests. Run with VERBOSE=yes for details.\n"
-        end
+        str << "\nYou have skipped tests. Run with VERBOSE=yes for details.\n" if results.any?(&:skipped?) && !verbose?
 
         str
       end
@@ -92,12 +89,10 @@ module Asciidoctor
         !!options[:verbose]
       end
 
-
       ##
       # @private
       # Module to be included into +Minitest::Test+.
       module ResultExt
-
         def symbol
           RESULT_SYMBOL[result_code.to_sym]
         end

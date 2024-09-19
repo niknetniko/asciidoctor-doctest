@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'asciidoctor/doctest/asciidoc_converter'
 require 'asciidoctor/doctest/generator'
 require 'asciidoctor/doctest/test_reporter'
@@ -14,10 +15,9 @@ module Asciidoctor
     ##
     # Rake tasks for testing and generating output examples.
     class RakeTasks < Rake::TaskLib
-
       # Genetates a description of a given task when
       # {#test_description} is not set.
-      DEFAULT_TEST_DESC = ->(task) do
+      DEFAULT_TEST_DESC = lambda do |task|
         <<-EOS.unindent
           Run integration tests for the #{task.subject}.
 
@@ -30,7 +30,7 @@ module Asciidoctor
 
       # Genetates a description of a given task when
       # {#generate_description} is not set.
-      DEFAULT_GENERATE_DESC = ->(task) do
+      DEFAULT_GENERATE_DESC = lambda do |task|
         <<-EOS.unindent
           Generate test examples for the #{task.subject}.
 
@@ -80,7 +80,6 @@ module Asciidoctor
       # @note Used only in the generator task.
       attr_accessor :force
 
-
       ##
       # Defines and configures +:test+ and +:generate+ rake tasks under the
       # specified namespace.
@@ -100,11 +99,11 @@ module Asciidoctor
 
         yield self
 
-        fail ArgumentError, 'The output_examples must be provided!' unless @output_examples
+        raise ArgumentError, 'The output_examples must be provided!' unless @output_examples
 
         @converter = converter.new(**converter_opts) if converter.is_a? Class
         @test_reporter ||= TestReporter.new($stdout, verbose: verbose?,
-          title: "Running DocTest for the #{subject}.")
+                                                     title: "Running DocTest for the #{subject}.")
 
         namespace(tasks_namespace) do
           define_test_task!
@@ -161,14 +160,14 @@ module Asciidoctor
         ENV.fetch('FORCE', @force.to_s).to_b
       end
 
-      alias_method :force, :force?
+      alias force force?
 
       # (see #verbose)
       def verbose?
         ENV.fetch('VERBOSE', @verbose.to_s).to_b
       end
 
-      alias_method :verbose, :verbose?
+      alias verbose verbose?
 
       # @private
       def subject
@@ -177,7 +176,7 @@ module Asciidoctor
           template_dirs: 'templates',
           backend_name: 'backend'
         }
-        .each do |key, desc|
+          .each do |key, desc|
           val = converter_opts[key]
           return "#{desc}: #{val}" if val
         end
@@ -187,7 +186,7 @@ module Asciidoctor
 
       def run_tests!
         tester = Tester.new(@input_examples, @output_examples, @converter, @test_reporter)
-        fail unless tester.run_tests(pattern: pattern)
+        raise unless tester.run_tests(pattern: pattern)
       end
 
       ##

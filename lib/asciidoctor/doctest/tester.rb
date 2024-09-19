@@ -1,15 +1,15 @@
 # frozen_string_literal: true
+
 require 'asciidoctor/doctest/minitest_diffy'
 require 'asciidoctor/doctest/test_reporter'
 require 'corefines'
 require 'minitest'
 
-using Corefines::Object::presence
+using Corefines::Object.presence
 
 module Asciidoctor
   module DocTest
     class Tester
-
       ##
       # @return [Minitest::Reporter] an instance of minitest's +Reporter+
       #   to report test results.
@@ -50,6 +50,7 @@ module Asciidoctor
 
         @input_suite.pair_with(@output_suite).each do |input, output|
           next if input.empty? || !input.name_match?(pattern)
+
           test_example input, output
         end
 
@@ -88,7 +89,6 @@ module Asciidoctor
       def test_with_minitest(name, &block)
         MinitestSingleTest.test! @reporter, name, name, block
       end
-
 
       # @private
       class MinitestSingleTest < Minitest::Test

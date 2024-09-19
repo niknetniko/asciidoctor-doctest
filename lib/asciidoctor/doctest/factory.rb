@@ -2,7 +2,6 @@
 
 module Asciidoctor::DocTest
   module Factory
-
     ##
     # Registers the given class in the factory under the specified name.
     #
@@ -28,11 +27,9 @@ module Asciidoctor::DocTest
     def create(name, opts = {})
       @factory_registry ||= {}
 
-      if (obj = @factory_registry[name.to_sym])
-        obj.call(opts)
-      else
-        fail ArgumentError, "No class registered with name: #{name}"
-      end
+      raise ArgumentError, "No class registered with name: #{name}" unless (obj = @factory_registry[name.to_sym])
+
+      obj.call(opts)
     end
   end
 end

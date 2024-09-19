@@ -1,15 +1,15 @@
 # frozen_string_literal: true
+
 require 'asciidoctor/doctest/html_normalizer'
 require 'corefines'
 require 'htmlbeautifier'
 require 'nokogiri'
 
-using Corefines::Object::then
+using Corefines::Object.then
 
 module Asciidoctor::DocTest
   module HTML
     class Converter < AsciidocConverter
-
       def initialize(paragraph_xpath: './p/node()', **opts)
         @paragraph_xpath = paragraph_xpath
         super opts
@@ -25,10 +25,10 @@ module Asciidoctor::DocTest
         opts[:include] ||= (@paragraph_xpath if input_exmpl.name.start_with? 'inline_')
 
         actual = convert(input_exmpl.content, header_footer: opts[:header_footer])
-          .then { |s| parse_html s }
-          .then { |h| find_nodes h, opts[:include] }
-          .then { |h| remove_nodes h, opts[:exclude] }
-          .then { |h| normalize h }
+                 .then { |s| parse_html s }
+                 .then { |h| find_nodes h, opts[:include] }
+                 .then { |h| remove_nodes h, opts[:exclude] }
+                 .then { |h| normalize h }
 
         expected = normalize(output_exmpl.content)
 
@@ -47,7 +47,7 @@ module Asciidoctor::DocTest
         # document. This nasty hack removes that tag from the result if not
         # present in the original HTML.
         if !has_content_type && content.is_a?(Nokogiri::HTML::Document)
-          result.sub!(/^\s*<meta http-equiv="Content-Type" content="[^"]+"\s*\/?>\n/i, '')
+          result.sub!(%r{^\s*<meta http-equiv="Content-Type" content="[^"]+"\s*/?>\n}i, '')
         end
 
         result

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require 'asciidoctor/doctest/io/base'
 require 'corefines'
 
 using Corefines::Object[:blank?, :presence]
-using Corefines::String::concat!
+using Corefines::String.concat!
 
 module Asciidoctor::DocTest
   module IO
@@ -23,7 +24,6 @@ module Asciidoctor::DocTest
     #   NOTE: The trailing new line (below this) will be removed.
     #
     class Asciidoc < Base
-
       def parse(input, group_name)
         examples = []
         current = create_example(nil)
@@ -31,13 +31,13 @@ module Asciidoctor::DocTest
         input.each_line do |line|
           case line.chomp!
           when %r{^//\s*\.([^ \n]+)}
-            local_name = $1
+            local_name = ::Regexp.last_match(1)
             current.content.chomp!
             examples << (current = create_example([group_name, local_name]))
           when %r{^//\s*:([^:]+):(.*)}
-            current[$1.to_sym] = $2.blank? ? true : $2.strip
+            current[::Regexp.last_match(1).to_sym] = ::Regexp.last_match(2).blank? ? true : ::Regexp.last_match(2).strip
           when %r{^//\s*(.*)\s*$}
-            (current.desc ||= '').concat!($1, "\n")
+            (current.desc ||= '').concat!(::Regexp.last_match(1), "\n")
           else
             current.content.concat!(line, "\n")
           end
@@ -47,8 +47,8 @@ module Asciidoctor::DocTest
       end
 
       def serialize(examples)
-        Array(examples).map { |exmpl|
-          Array.new.push(".#{exmpl.local_name}")
+        Array(examples).map do |exmpl|
+          [].push(".#{exmpl.local_name}")
             .push(*exmpl.desc.lines.map(&:chomp))
             .push(*format_options(exmpl.opts))
             .map { |s| '// ' + s }
@@ -56,7 +56,7 @@ module Asciidoctor::DocTest
             .compact
             .join("\n")
             .concat("\n")
-        }.join("\n")
+        end.join("\n")
       end
     end
   end

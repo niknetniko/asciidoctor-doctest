@@ -1,5 +1,4 @@
 describe DocTest::HtmlNormalizer do
-
   [Nokogiri::HTML::Document, Nokogiri::HTML::DocumentFragment].each do |klass|
     it "HtmlNormalizer should be included in #{klass}" do
       expect(klass).to have_method :normalize!
@@ -7,7 +6,6 @@ describe DocTest::HtmlNormalizer do
   end
 
   describe 'normalize!' do
-
     it 'sorts attributes by name' do
       output = normalize '<img src="tux.png" width="60" height="100" alt="Tux!">'
       expect(output).to eq '<img alt="Tux!" height="100" src="tux.png" width="60">'
@@ -19,7 +17,6 @@ describe DocTest::HtmlNormalizer do
     end
 
     context 'in "style" attribute' do
-
       it 'sorts CSS declarations by name' do
         output = normalize %(<div style="width: 100%; color: 'red'; font-style: bold"></div>)
         expect(output).to eq %(<div style="color: 'red'; font-style: bold; width: 100%;"></div>)
@@ -27,7 +24,6 @@ describe DocTest::HtmlNormalizer do
     end
 
     context 'in text node' do
-
       it 'strips nonsignificant leading and trailing whitespaces' do
         output = normalize "<p> Lorem<b> ipsum</b> dolor\n<br> sit <i>amet</i></p>"
         expect(output).to eq '<p>Lorem<b> ipsum</b> dolor<br>sit <i>amet</i></p>'
@@ -45,7 +41,6 @@ describe DocTest::HtmlNormalizer do
     end
 
     context 'in preformatted node or descendant' do
-
       it 'does not strip leading and trailing whitespaces' do
         input = "<pre> Lorem<b> ipsum</b> dolor\n<br> sit amet</pre>"
         expect(normalize(input)).to eq input

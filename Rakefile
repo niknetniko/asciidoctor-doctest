@@ -8,7 +8,7 @@ begin
 
   RSpec::Core::RakeTask.new(:spec)
 
-  task :test => :spec
+  task test: :spec
   default_tasks << :spec
 rescue LoadError => e
   warn "#{e.path} is not available"
@@ -34,4 +34,4 @@ rescue LoadError => e
   warn "#{e.path} is not available"
 end
 
-task :default => default_tasks
+task default: default_tasks

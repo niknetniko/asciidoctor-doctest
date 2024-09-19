@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 require 'corefines'
 require 'nokogiri'
 
-using Corefines::Object::try
+using Corefines::Object.try
 
 module Asciidoctor
   module DocTest
@@ -14,7 +15,6 @@ module Asciidoctor
     #   Nokogiri::HTML.parse(str).normalize!
     #   Nokogiri::HTML.fragment(str).normalize!
     module HtmlNormalizer
-
       ##
       # Normalizes the HTML document or fragment so it can be easily compared
       # with another HTML.
@@ -64,11 +64,12 @@ module Asciidoctor
       # Sorts CSS declarations in style attribute of the element +node+ by name.
       def sort_element_style_attr!(node)
         return unless node.has_attribute? 'style'
+
         decls = node['style'].scan(/([\w-]+):\s*([^;]+);?/).sort_by(&:first)
         node['style'] = decls.map { |name, val| "#{name}: #{val};" }.join(' ')
       end
 
-      # Note: muttable methods like +gsub!+ doesn't work on node content.
+      # NOTE: muttable methods like +gsub!+ doesn't work on node content.
 
       # Strips repeated whitespaces in the text +node+.
       def strip_redundant_spaces!(node)
@@ -92,10 +93,12 @@ module Asciidoctor
         method = { left: :previous_sibling, right: :next_sibling }[side]
 
         return true if node.send(method).try(:name) == 'br'
+
         loop do
-          if (sibling = node.send(method))
-            return false if sibling.text? || inline_element?(sibling)
+          if (sibling = node.send(method)) && (sibling.text? || inline_element?(sibling))
+            return false
           end
+
           node = node.parent
           return true unless inline_element? node
         end

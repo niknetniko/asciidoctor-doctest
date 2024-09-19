@@ -1,13 +1,12 @@
 require 'asciidoctor/doctest/minitest_diffy'
 require 'corefines'
 
-using Corefines::String::color
+using Corefines::String.color
 
 describe Diffy::Format do
-
   describe '#minitest' do
-
     subject(:output) { input.minitest }
+
     let(:input) { [] }
 
     # This looks odd, but Diffy is actually using Format exactly like that.
@@ -36,7 +35,7 @@ describe Diffy::Format do
       let(:input) { ['+ <div><p>chunky bacon</p></div>'] }
 
       it 'replaces "+" with "A", adds padding and colour' do
-        is_expected.to eq "\n" + 'A   <div><p>chunky bacon</p></div>'.color(:red)
+        expect(subject).to eq "\n" + 'A   <div><p>chunky bacon</p></div>'.color(:red)
       end
     end
 
@@ -44,7 +43,7 @@ describe Diffy::Format do
       let(:input) { ['- <p>chunky bacon</p>'] }
 
       it 'replaces "-" with "E", adds padding and colour' do
-        is_expected.to eq "\n" + 'E   <p>chunky bacon</p>'.color(:green)
+        expect(subject).to eq "\n" + 'E   <p>chunky bacon</p>'.color(:green)
       end
     end
 
@@ -52,7 +51,7 @@ describe Diffy::Format do
       let(:input) { ['Lorem ipsum dolor', '  sit amet'] }
 
       it 'returns the lines with padding' do
-        is_expected.to eq "\n  Lorem ipsum dolor\n    sit amet"
+        expect(subject).to eq "\n  Lorem ipsum dolor\n    sit amet"
       end
     end
   end

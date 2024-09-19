@@ -1,16 +1,17 @@
 # frozen_string_literal: true
+
 require 'pathname'
 
 module Asciidoctor
   module DocTest
-
     @examples_path = Pathname.new(
-      '../../data/examples/asciidoc').expand_path(__dir__).to_s.freeze
+      '../../data/examples/asciidoc'
+    ).expand_path(__dir__).to_s.freeze
 
     # @return [Array<String>] paths of the built-in input examples. It always
     #   returns a new array.
     def self.examples_path
-      [ @examples_path ]
+      [@examples_path]
     end
   end
 end

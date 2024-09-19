@@ -1,25 +1,19 @@
-using Corefines::String::unindent
+using Corefines::String.unindent
 
 describe DocTest::IO::XML do
-
-  it_should_behave_like DocTest::IO::Base
-
   subject(:suite) { described_class.new(file_ext: '.html') }
 
+  it_behaves_like DocTest::IO::Base
 
   describe '#initialize' do
-
     it 'uses ".html" as default file_ext' do
       expect(suite.file_ext).to eq '.html'
     end
   end
 
-
   describe 'parsing/serialization:' do
-
     context 'one example' do
-
-      shared_examples :example do
+      shared_examples 'example' do
         let(:parsed) { suite.parse input, 's' }
         let(:serialized) { suite.serialize output }
 
@@ -38,7 +32,7 @@ describe DocTest::IO::XML do
         let(:input) { "<!-- .basic -->\n" }
         let(:output) { create_example 's:basic' }
 
-        include_examples :example
+        include_examples 'example'
       end
 
       context 'with multiline content' do
@@ -54,7 +48,7 @@ describe DocTest::IO::XML do
         let(:input) { "<!-- .multiline -->\n#{content}" }
         let(:output) { create_example 's:multiline', content: content.chomp }
 
-        include_examples :example
+        include_examples 'example'
       end
 
       context 'with description' do
@@ -70,9 +64,10 @@ describe DocTest::IO::XML do
 
         let :output do
           create_example 's:strong', content: '<strong>allons-y!</strong>',
-            desc: "This is a description,\nsee?"
+                                     desc: "This is a description,\nsee?"
         end
-        include_examples :example
+
+        include_examples 'example'
       end
 
       context 'with options' do
@@ -95,7 +90,8 @@ describe DocTest::IO::XML do
             header_footer: true
           }
         end
-        include_examples :example
+
+        include_examples 'example'
       end
 
       context 'with description and options' do
@@ -113,11 +109,14 @@ describe DocTest::IO::XML do
             exclude: ['.//code']
           }
         end
-        include_examples :example
+
+        include_examples 'example'
       end
     end
 
     context 'multiple examples' do
+      subject(:parsed) { suite.parse input, 's' }
+
       let :input do
         <<-EOF.unindent
           <!-- .basic -->
@@ -127,8 +126,6 @@ describe DocTest::IO::XML do
           Refer to <<section-a>>.
         EOF
       end
-
-      subject(:parsed) { suite.parse input, 's' }
 
       it { is_expected.to have(2).items }
 

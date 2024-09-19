@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require 'asciidoctor/doctest/io/base'
 require 'corefines'
 
 using Corefines::Object[:blank?, :presence]
-using Corefines::String::concat!
+using Corefines::String.concat!
 
 module Asciidoctor::DocTest
   module IO
@@ -24,7 +25,6 @@ module Asciidoctor::DocTest
     #   <div class="note">The trailing new line (below this) will be removed.</div>
     #
     class XML < Base
-
       def parse(input, group_name)
         examples = []
         current = create_example(nil)
@@ -33,13 +33,14 @@ module Asciidoctor::DocTest
         input.each_line do |line|
           line.chomp!
           if line =~ /^<!--\s*\.([^ \n]+)/
-            name = $1
+            name = ::Regexp.last_match(1)
             current.content.chomp!
             examples << (current = create_example([group_name, name]))
             in_comment = true
           elsif in_comment
             if line =~ /^\s*:([^:]+):(.*)/
-              current[$1.to_sym] = $2.blank? ? true : $2.strip
+              current[::Regexp.last_match(1).to_sym] =
+                ::Regexp.last_match(2).blank? ? true : ::Regexp.last_match(2).strip
             else
               desc = line.rstrip.chomp('-->').strip
               (current.desc ||= '').concat!(desc, "\n") unless desc.empty?
@@ -54,7 +55,7 @@ module Asciidoctor::DocTest
       end
 
       def serialize(examples)
-        Array(examples).map { |exmpl|
+        Array(examples).map do |exmpl|
           header = [
             ".#{exmpl.local_name}",
             exmpl.desc.presence,
@@ -62,8 +63,8 @@ module Asciidoctor::DocTest
           ].compact
 
           header_str = header.one? ? (header.first + ' ') : (header.join("\n") + "\n")
-          [ "<!-- #{header_str}-->", exmpl.content.presence ].compact.join("\n") + "\n"
-        }.join("\n")
+          ["<!-- #{header_str}-->", exmpl.content.presence].compact.join("\n") + "\n"
+        end.join("\n")
       end
     end
   end
