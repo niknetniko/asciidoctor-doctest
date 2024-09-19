@@ -43,13 +43,13 @@ describe DocTest::Example do
       ['*', '*:*', 'block_ulist:*', '*:with-title', 'block_*:*',
        'block_ulist:with-*', 'block_ulist:*title'].each do |pattern|
         it "returns true for #{pattern}" do
-          expect(o.name_match?(pattern)).to be_truthy
+          expect(o).to be_name_match(pattern)
         end
       end
 
       ['block_foo:with-title', 'block_ulist:foo', 'foo:**:foo', 'foo'].each do |pattern|
         it "returns false for #{pattern}" do
-          expect(o.name_match?(pattern)).to be_falsy
+          expect(o).not_to be_name_match(pattern)
         end
       end
     end
