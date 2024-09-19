@@ -39,8 +39,6 @@ module DocTest
           .with(input.content, converter_opts).and_return(rendered)
       end
 
-      it 'returns array of converted input content and output content'
-
       context 'with :exclude option' do
         let(:output_opts) { { exclude: ['.//p', './/code'] } }
 

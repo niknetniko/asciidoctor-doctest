@@ -30,11 +30,6 @@ jobs:
       - name: Run integration tests
         run: bundle exec rake cucumber
 
-      # FIXME: broken
-      #- name: Report test coverage to Code Climate
-      #  run: bundle exec codeclimate-test-reporter
-      #  env:
-      #    CODECLIMATE_REPO_TOKEN: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
   lint:
     name: Run Rubocop
     runs-on: ubuntu-latest
@@ -47,25 +42,3 @@ jobs:
       - env:
           RAILS_ENV: "test"
         run: bundle exec rubocop -c  .rubocop.yml
-
-#  publish:
-#    name: Publish to RubyGems
-#    needs: [ test ]
-#    if: startsWith(github.ref, 'refs/tags/v')
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v4
-#
-#      - uses: ruby/setup-ruby@v1
-#        with:
-#          ruby-version: 3.3
-#          bundler-cache: true
-#
-#      - name: Publish to RubyGems
-#        run: |
-#          install -D -m 0600 /dev/null $HOME/.gem/credentials
-#          printf -- '---\n:rubygems_api_key: %s\n' "$RUBYGEMS_API_KEY" > $HOME/.gem/credentials
-#          gem build *.gemspec
-#          gem push *.gem
-#        env:
-#          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
