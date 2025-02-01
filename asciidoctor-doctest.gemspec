@@ -36,7 +36,7 @@ A tool for end-to-end testing of Asciidoctor backends based on comparing of text
   s.add_development_dependency 'thread_safe', '~> 0.3'
 
   # unit tests
-  s.add_development_dependency 'fakefs', '~> 2.5'
+  s.add_development_dependency 'fakefs', '~> 3.0'
   s.add_development_dependency 'rspec', '~> 3.1'
   s.add_development_dependency 'rspec-collection_matchers', '~> 1.1'
 
